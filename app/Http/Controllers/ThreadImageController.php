@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DOMDocument;
 use App\Services\ImageService;
+use Illuminate\Support\Facades\Log;
 
 class ThreadImageController extends Controller
 {
@@ -72,11 +73,9 @@ class ThreadImageController extends Controller
         // Get profile image URL using the service
         $profileImageUrl = $this->imageService->processProfileImage($html, 'short_url');
 
-        // Use default profile image if none found
-        if (!$profileImageUrl) {
-            $defaultProfileUrl = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
-            $base64Data = $this->imageService->convertImageToBase64($defaultProfileUrl);
-            $profileImageUrl = $this->imageService->createShortUrl($base64Data, 'profile');
+        // no profile image found, fetch from user's profile page
+        if (!$profileImageUrl && !empty($username)) {
+            $profileImageUrl = $this->fetchProfileImageFromUserPage($username);
         }
 
         $doc = new DOMDocument();
@@ -96,12 +95,7 @@ class ThreadImageController extends Controller
         }
 
         $text = $ogDescription;
-
         $text = htmlspecialchars_decode($text, ENT_QUOTES);
-
-        // Check if there are image links and if the content has any links
-        $hasImageLinks = !empty($imageLinks);
-        $hasContentLinks = preg_match('/<a\s*[^>]*href="([^"]*)"[^>]*>.*<\/a>/i', $text);
 
         // Process content images using the service
         $imageDataUrl = $this->imageService->processContentImages($html, 'short_url');
@@ -109,11 +103,8 @@ class ThreadImageController extends Controller
         return [
             'text' => $text,
             'username' => $username,
-            'image_url' => $imageDataUrl,
-            'profile_image_url' => $profileImageUrl,
-            'has_image_links' => $hasImageLinks,
-            'has_content_links' => $hasContentLinks,
-            'show_image' => !empty($imageLinks) && $hasImageLinks && !$hasContentLinks
+            'profile_image' => $profileImageUrl,
+            'thread_post_image' => $imageDataUrl,
         ];
     }
 
@@ -123,5 +114,47 @@ class ThreadImageController extends Controller
     public function serveMedia($type, $shortId)
     {
         return $this->imageService->serveMedia($type, $shortId);
+    }
+
+    /**
+     * Fetch profile image from user's Threads profile page
+     */
+    private function fetchProfileImageFromUserPage($username)
+    {
+        if (empty($username)) {
+            return null;
+        }
+
+        $profileUrl = "https://www.threads.com/{$username}";
+
+        try {
+            $curl = curl_init($profileUrl);
+
+            curl_setopt_array($curl, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_USERAGENT => 'Mozilla/5.0',
+                CURLOPT_SSL_VERIFYPEER => false,
+            ]);
+
+            $profileHtml = curl_exec($curl);
+
+            if (curl_errno($curl)) {
+                curl_close($curl);
+                return null;
+            }
+
+            curl_close($curl);
+
+            $profileImageUrl = $this->imageService->processProfileImage($profileHtml, 'short_url');
+
+            return $profileImageUrl;
+        } catch (\Exception $e) {
+            Log::warning('Failed to fetch profile image from user page: ' . $e->getMessage(), [
+                'username' => $username,
+                'profile_url' => $profileUrl
+            ]);
+            return null;
+        }
     }
 }

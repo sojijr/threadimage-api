@@ -14,7 +14,8 @@ class ImageService
         if ($patterns === null) {
             $patterns = [
                 '/https?:\/\/scontent-[^.]+\.cdninstagram\.com\/v\/t51\.2885-19\/[^?\s]+\?[^\'"\s]*/i',
-                '/https?:\/\/instagram\.[^.]+\.fna\.fbcdn\.net\/v\/t51\.2885-19\/[^?\s]+\?[^\'"\s]*/i'
+                '/https?:\/\/instagram\.[^.]+\.fna\.fbcdn\.net\/v\/t51\.2885-19\/[^?\s]+\?[^\'"\s]*/i',
+                '/https?:\/\/[^.]*\.(?:cdninstagram\.com|fbcdn\.net)\/[^\'"\s]*t51\.[^\'"\s]*/i'
             ];
         }
 
@@ -50,7 +51,6 @@ class ImageService
 
         if (!empty($matches[0])) {
             foreach ($matches[0] as $link) {
-                // Filter out small thumbnails
                 if (strpos($link, '640x640') === false) {
                     $imageLinks[] = $link;
                 }
@@ -69,7 +69,6 @@ class ImageService
             return null;
         }
 
-        // Clean the URL
         $cleanUrl = rtrim($imageUrl, '"');
         $cleanUrl = html_entity_decode($cleanUrl);
 
@@ -97,7 +96,6 @@ class ImageService
         $shortId = substr(md5($base64Data), 0, 8);
         $cacheKey = "short_url_{$type}_{$shortId}";
 
-        // Store in cache for 30 minutes
         cache()->put($cacheKey, $base64Data, 1800);
 
         return url("api/media/{$type}/{$shortId}");
