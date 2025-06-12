@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ImageService;
+use App\Swagger\ApiDocumentation;
+
+/**
+ * @OA\PathItem(path="/threads-profile")
+ */
 
 class ThreadProfileController extends Controller
 {
@@ -15,7 +20,7 @@ class ThreadProfileController extends Controller
     }
 
     /**
-     * Handle the threads profile URL input and process user profile data
+     * @see ApiDocumentation::threads_profile
      */
     public function index(Request $request)
     {

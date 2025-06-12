@@ -5,7 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DOMDocument;
 use App\Services\ImageService;
+use App\Swagger\ApiDocumentation;
 use Illuminate\Support\Facades\Log;
+
+
+/**
+ * @OA\PathItem(path="/threads-post")
+ */
 
 class ThreadImageController extends Controller
 {
@@ -17,7 +23,7 @@ class ThreadImageController extends Controller
     }
 
     /**
-     * Handle the threads URL input and process the data
+     * @see ApiDocumentation::threads_post
      */
     public function index(Request $request)
     {
@@ -108,9 +114,6 @@ class ThreadImageController extends Controller
         ];
     }
 
-    /**
-     * Serve media from shortened URLs
-     */
     public function serveMedia($type, $shortId)
     {
         return $this->imageService->serveMedia($type, $shortId);

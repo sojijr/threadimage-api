@@ -1,0 +1,274 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ThreadImage API",
+        "description": "API for processing Threads URLs and extracting images/profiles",
+        "contact": {
+            "email": "dammysoji11@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "https://threadimage-api.laravel.cloud",
+            "description": "Production server"
+        },
+        {
+            "url": "http://threadimage-api.test",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/threads-post": {},
+        "/threads-profile": {},
+        "/api/threads-post": {
+            "post": {
+                "tags": [
+                    "Threads Processing"
+                ],
+                "summary": "Process Threads post URL",
+                "description": "Extracts images, profile information, and text content from a given Threads post URL",
+                "operationId": "9ca9316ac5fe4641d751511db7278385",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "threads-url": {
+                                        "description": "The Threads post URL to process",
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://www.threads.com/@username/post/123456789"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully processed Threads URL",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "properties": {
+                                                "text": {
+                                                    "description": "Extracted post text",
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "description": "Thread author username",
+                                                    "type": "string"
+                                                },
+                                                "profile_image_url": {
+                                                    "description": "Profile image URL",
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "image_post_url": {
+                                                    "description": "Post content image URL",
+                                                    "type": "string",
+                                                    "format": "url"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error - invalid URL",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The threads-url field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "threads-url": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The threads-url field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error during processing",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error processing Threads URL: ..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/threads-profile": {
+            "post": {
+                "tags": [
+                    "Threads Processing"
+                ],
+                "summary": "Process Threads profile URL",
+                "description": "Extracts profile information and data from a given Threads user profile URL",
+                "operationId": "330ba2160279be34f63f7e90f438d603",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "profile-url": {
+                                        "description": "The Threads profile URL to process",
+                                        "type": "string",
+                                        "format": "url",
+                                        "example": "https://www.threads.com/@username"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully processed Threads profile URL",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "data": {
+                                            "description": "Profile data extracted from the Threads profile page",
+                                            "properties": {
+                                                "username": {
+                                                    "description": "Thread author username",
+                                                    "type": "string"
+                                                },
+                                                "display_name": {
+                                                    "description": "Thread author display name",
+                                                    "type": "string"
+                                                },
+                                                "bio": {
+                                                    "description": "Thread author biography",
+                                                    "type": "string"
+                                                },
+                                                "follower_count": {
+                                                    "description": "Number of followers",
+                                                    "type": "string"
+                                                },
+                                                "profile_image_url": {
+                                                    "description": "Profile image URL",
+                                                    "type": "string",
+                                                    "format": "url"
+                                                },
+                                                "url": {
+                                                    "description": "Profile URL",
+                                                    "type": "string",
+                                                    "format": "url"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error - invalid URL",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The profile-url field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "profile-url": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The profile-url field is required."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server error during processing",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error processing Threads profile: ..."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Threads Processing",
+            "description": "API Endpoints for processing Threads posts and profiles"
+        }
+    ]
+}
