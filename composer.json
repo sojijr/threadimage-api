@@ -53,8 +53,9 @@
             "@php artisan migrate --graceful --ansi"
         ],
         "deploy": [
+            "@php -r \"!file_exists('database') && mkdir('database', 0755, true);\"",
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --force",
+            "@php artisan migrate --force --no-interaction",
             "@php artisan cache:clear",
             "@php artisan config:cache",
             "@php artisan route:cache"
