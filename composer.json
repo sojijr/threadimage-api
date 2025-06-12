@@ -52,14 +52,6 @@
             "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
             "@php artisan migrate --graceful --ansi"
         ],
-        "deploy": [
-            "@php -r \"!file_exists('database') && mkdir('database', 0755, true);\"",
-            "@php -r \"file_exists('database/database.sqlite') || touch('database/database.sqlite');\"",
-            "@php artisan migrate --force --no-interaction",
-            "@php artisan cache:clear",
-            "@php artisan config:cache",
-            "@php artisan route:cache"
-        ],
         "dev": [
             "Composer\\Config::disableProcessTimeout",
             "npx concurrently -c \"#93c5fd,#c4b5fd,#fdba74\" \"php artisan serve\" \"php artisan queue:listen --tries=1\" \"npm run dev\" --names='server,queue,vite'"
