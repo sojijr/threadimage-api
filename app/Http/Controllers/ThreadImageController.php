@@ -103,8 +103,8 @@ class ThreadImageController extends Controller
         return [
             'text' => $text,
             'username' => $username,
-            'profile_image' => $profileImageUrl,
-            'thread_post_image' => $imageDataUrl,
+            'profile_image_url' => $profileImageUrl,
+            'image_post_url' => $imageDataUrl
         ];
     }
 

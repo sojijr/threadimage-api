@@ -100,7 +100,7 @@ class ThreadProfileController extends Controller
             'display_name' => $this->extractDisplayName($xpath),
             'bio' => $this->extractBio($html),
             'follower_count' => $this->extractFollowerCount($xpath),
-            'profile_image' => $this->imageService->processProfileImage($html, 'short_url'),
+            'profile_image_url' => $this->imageService->processProfileImage($html, 'short_url'),
             'url' => $profileUrl,
         ];
     }
