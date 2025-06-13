@@ -8,7 +8,6 @@ use App\Services\ImageService;
 use App\Swagger\ApiDocumentation;
 use Illuminate\Support\Facades\Log;
 
-
 /**
  * @OA\PathItem(path="/threads-post")
  */
@@ -72,9 +71,6 @@ class ThreadImageController extends Controller
         $parsedUrl = parse_url($threadsUrl);
         $path = explode('/', $parsedUrl['path']);
         $username = isset($path[1]) ? $path[1] : '';
-
-        // Extract image links using regular expressions
-        $imageLinks = $this->imageService->extractContentImages($html);
 
         // Get profile image URL using the service
         $profileImageUrl = $this->imageService->processProfileImage($html, 'short_url');

@@ -15,7 +15,6 @@ class ImageService
             $patterns = [
                 '/https?:\/\/scontent-[^.]+\.cdninstagram\.com\/v\/t51\.2885-19\/[^?\s]+\?[^\'"\s]*/i',
                 '/https?:\/\/instagram\.[^.]+\.fna\.fbcdn\.net\/v\/t51\.2885-19\/[^?\s]+\?[^\'"\s]*/i',
-                '/https?:\/\/[^.]*\.(?:cdninstagram\.com|fbcdn\.net)\/[^\'"\s]*t51\.[^\'"\s]*/i'
             ];
         }
 
@@ -43,7 +42,7 @@ class ImageService
     public function extractContentImages($html, $pattern = null)
     {
         if ($pattern === null) {
-            $pattern = '/https?:\/\/instagram\.[^.]+\.fna\.fbcdn\.net\/v\/t51\.(?!2885-19)[^?\s]+\?[^\'"\s]*/i';
+            $pattern = '/https?:\/\/[^.]*\.(?:cdninstagram\.com|fbcdn\.net)\/[^\'"\s]*t51\.[^\'"\s]*/i';
         }
 
         $imageLinks = [];
