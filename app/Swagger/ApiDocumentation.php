@@ -29,7 +29,7 @@ class ApiDocumentation
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 @OA\Property(
-     *                     property="threads-url",
+     *                     property="threads_url",
      *                     type="string",
      *                     format="url",
      *                     description="The Threads post URL to process",
@@ -57,14 +57,14 @@ class ApiDocumentation
      *         response=422,
      *         description="Validation error - invalid URL",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="The threads-url field is required."),
+     *             @OA\Property(property="message", type="string", example="The threads_url field is required."),
      *             @OA\Property(
      *                 property="errors",
      *                 type="object",
      *                 @OA\Property(
-     *                     property="threads-url",
+     *                     property="threads_url",
      *                     type="array",
-     *                     @OA\Items(type="string", example="The threads-url field is required.")
+     *                     @OA\Items(type="string", example="The threads_url field is required.")
      *                 )
      *             )
      *         )
@@ -97,7 +97,7 @@ class ApiDocumentation
      *             mediaType="application/json",
      *             @OA\Schema(
      *                 @OA\Property(
-     *                     property="profile-url",
+     *                     property="profile_url",
      *                     type="string",
      *                     format="url",
      *                     description="The Threads profile URL to process",
@@ -128,14 +128,14 @@ class ApiDocumentation
      *         response=422,
      *         description="Validation error - invalid URL",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string", example="The profile-url field is required."),
+     *             @OA\Property(property="message", type="string", example="The profile_url field is required."),
      *             @OA\Property(
      *                 property="errors",
      *                 type="object",
      *                 @OA\Property(
-     *                     property="profile-url",
+     *                     property="profile_url",
      *                     type="array",
-     *                     @OA\Items(type="string", example="The profile-url field is required.")
+     *                     @OA\Items(type="string", example="The profile_url field is required.")
      *                 )
      *             )
      *         )

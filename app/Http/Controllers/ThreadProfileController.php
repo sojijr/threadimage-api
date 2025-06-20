@@ -25,10 +25,10 @@ class ThreadProfileController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'profile-url' => 'required|url'
+            'profile_url' => 'required|url'
         ]);
 
-        $profileUrl = $request->input('profile-url');
+        $profileUrl = $request->input('profile_url');
 
         try {
             $data = $this->processThreadsProfile($profileUrl);

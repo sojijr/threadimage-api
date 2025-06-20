@@ -35,7 +35,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "threads-url": {
+                                    "threads_url": {
                                         "description": "The Threads post URL to process",
                                         "type": "string",
                                         "format": "url",
@@ -95,15 +95,15 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "The threads-url field is required."
+                                            "example": "The threads_url field is required."
                                         },
                                         "errors": {
                                             "properties": {
-                                                "threads-url": {
+                                                "threads_url": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string",
-                                                        "example": "The threads-url field is required."
+                                                        "example": "The threads_url field is required."
                                                     }
                                                 }
                                             },
@@ -152,7 +152,7 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "profile-url": {
+                                    "profile_url": {
                                         "description": "The Threads profile URL to process",
                                         "type": "string",
                                         "format": "url",
@@ -221,15 +221,15 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "The profile-url field is required."
+                                            "example": "The profile_url field is required."
                                         },
                                         "errors": {
                                             "properties": {
-                                                "profile-url": {
+                                                "profile_url": {
                                                     "type": "array",
                                                     "items": {
                                                         "type": "string",
-                                                        "example": "The profile-url field is required."
+                                                        "example": "The profile_url field is required."
                                                     }
                                                 }
                                             },

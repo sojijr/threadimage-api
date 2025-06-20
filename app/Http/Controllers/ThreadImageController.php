@@ -27,10 +27,10 @@ class ThreadImageController extends Controller
     public function index(Request $request)
     {
         $request->validate([
-            'threads-url' => 'required|url'
+            'threads_url' => 'required|url'
         ]);
 
-        $threadsUrl = $request->input('threads-url');
+        $threadsUrl = $request->input('threads_url');
 
         try {
             $data = $this->processThreadsUrl($threadsUrl);
